@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 export default function UserForm(props) {
   const { values, submit, change, disabled, errors } = props;
@@ -16,12 +16,12 @@ export default function UserForm(props) {
   };
 
   return (
-    <form onSubmit={onSubmit}>
-      <h4>General information</h4>
+    <form className="form" onSubmit={onSubmit}>
+      <h1>New User Form</h1>
       <label>
         First Name
         <input
-          value={values.name}
+          value={values["first_name"]}
           onChange={onChange}
           name="first_name"
           type="text"
@@ -30,7 +30,7 @@ export default function UserForm(props) {
       <label>
         Last Name
         <input
-          value={values.name}
+          value={values["last_name"]}
           onChange={onChange}
           name="last_name"
           type="text"
@@ -42,7 +42,7 @@ export default function UserForm(props) {
           value={values.email}
           onChange={onChange}
           name="email"
-          type="text"
+          type="email"
         />
       </label>
       <label>
@@ -57,15 +57,20 @@ export default function UserForm(props) {
 
       <label>
         Do you agree to the terms and conditions?
-        <input type="checkbox" name="terms" />
+        <input
+          type="checkbox"
+          name="terms"
+          onChange={onChange}
+          value={values.terms}
+        />
       </label>
-      <button disabled={disabled}>Submit!</button>
       <div className="errors">
         <div>{errors["first_name"]}</div>
         <div>{errors["last_name"]}</div>
         <div>{errors.email}</div>
         <div>{errors.password}</div>
       </div>
+      <button disabled={disabled}>Submit!</button>
     </form>
   );
 }

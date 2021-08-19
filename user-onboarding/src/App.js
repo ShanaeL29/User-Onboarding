@@ -19,6 +19,7 @@ const initialFormErrors = {
   last_name: "",
   email: "",
   password: "",
+  initialFormErrors: "",
 };
 
 const initialUsers = [];
@@ -52,9 +53,9 @@ function App() {
   };
   const validate = (name, value) => {
     yup
-      .reach(schema, name)
+      .reach(schema, name) //reach into the schema and compare the input field(name, email, whatever) with the value currently saved in vvv form values
       .validate(value)
-      .then(() => setFormValues({ ...formErrors, [name]: "" }))
+      .then(() => setFormErrors({ ...formErrors, [name]: "" }))
       .catch((err) => setFormErrors({ ...formErrors, [name]: err.errors[0] }));
   };
 
@@ -69,6 +70,7 @@ function App() {
       last_name: formValues["last_name"].trim(),
       email: formValues.email,
       password: formValues.password,
+      terms: true,
     };
     postNewUser(newUser);
   };

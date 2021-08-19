@@ -12,6 +12,8 @@ function User({ details }) {
         {details["first_name"]} {details["last_name"]}
       </h2>
       <p>Email: {details.email}</p>
+      {/* <p>Password: {details.password}</p>  we don't want these details to actually show on screen to be seen
+      <p>Terms: {details.terms}</p> */}
     </div>
   );
 }
