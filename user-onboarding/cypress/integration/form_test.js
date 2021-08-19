@@ -4,9 +4,9 @@ describe("User Onboarding App", () => {
   });
   const firstNameInput = () => cy.get("input[name=first_name]");
   const lastNameInput = () => cy.get("input[name=last_name]");
-  const email = () => cy.get("input[name=email]");
-  const password = () => cy.get("input[name=password]");
-  const terms = () => cy.get("input[name=terms]");
+  const emailInput = () => cy.get("input[name=email]");
+  const passwordInput = () => cy.get("input[name=password]");
+  const termsInput = () => cy.get("input[name=terms]");
   const submitButton = () => cy.get("button[id='submitButton']");
 
   it("Sanity check to make sure that tests work", () => {
@@ -19,9 +19,9 @@ describe("User Onboarding App", () => {
   it("Elements are displaying correctly", () => {
     firstNameInput().should("exist");
     lastNameInput().should("exist");
-    email().should("exist");
-    password().should("exist");
-    terms().should("exist");
+    emailInput().should("exist");
+    passwordInput().should("exist");
+    termsInput().should("exist");
     submitButton().should("exist");
     cy.contains("Submit!").should("exist");
   });
@@ -46,12 +46,37 @@ describe("User Onboarding App", () => {
         .type("Leslie")
         .should("have.value", "Leslie");
 
-      email()
+      emailInput()
         .should("have.value", "")
         .type("email@email.com")
         .should("have.value", "email@email.com");
 
-      password().should();
+      passwordInput()
+        .should("have.value", "")
+        .type("Password")
+        .should("have.value", "Password");
+
+      termsInput().should("not.be.checked").click().should("be.checked");
+
+      it("The submit button enables when all inputs are filled out", () => {
+        firstNameInput().type("Shanae");
+        lastNameInput().type("Leslie");
+        emailInput().type("email@email.com");
+        passwordInput().type("Password");
+        termsInput().should("be.checked");
+        submitButton().should("not.be.disabled");
+      });
+
+      it("The submit button does not become enabled when form validation fails", () => {
+        firstNameInput().type("");
+        lastNameInput().type("");
+        emailInput().type("email");
+        passwordInput().type("Passw");
+        termsInput().should("not.be.checked");
+        submitButton().should("be.disabled");
+      });
+
+      //   Check for form validation if an input is left empty
     });
   });
 });
