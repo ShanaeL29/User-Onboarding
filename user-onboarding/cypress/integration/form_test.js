@@ -26,7 +26,7 @@ describe("User Onboarding App", () => {
     cy.contains("Submit!").should("exist");
   });
 
-  describe("Filling out the inputs and canceling", () => {
+  describe("Filling out the inputs", () => {
     it("User can navigate to the site", () => {
       cy.url().should("include", "localhost");
     });
@@ -57,8 +57,10 @@ describe("User Onboarding App", () => {
         .should("have.value", "Password");
 
       termsInput().should("not.be.checked").click().should("be.checked");
+    });
 
-      it("The submit button enables when all inputs are filled out", () => {
+    describe("The buttons work as expected", () => {
+      it("The submit button enables when all inputs are valid", () => {
         firstNameInput().type("Shanae");
         lastNameInput().type("Leslie");
         emailInput().type("email@email.com");
@@ -67,16 +69,14 @@ describe("User Onboarding App", () => {
         submitButton().should("not.be.disabled");
       });
 
-      it("The submit button does not become enabled when form validation fails", () => {
+      it("The submit button does not become enabled when the", () => {
         firstNameInput().type("");
-        lastNameInput().type("");
-        emailInput().type("email");
-        passwordInput().type("Passw");
-        termsInput().should("not.be.checked");
+        lastNameInput().type("Leslie");
+        emailInput().type("email@email.com");
+        passwordInput().type("Password");
+        termsInput().should("be.checked");
         submitButton().should("be.disabled");
       });
-
-      //   Check for form validation if an input is left empty
     });
   });
 });
